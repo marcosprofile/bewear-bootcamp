@@ -67,13 +67,12 @@ export default function SignUpForm() {
         onSuccess: () => {
           router.push("/")
         },
-        onError: (error) => {
-          if (error.error.code === "USER_ALREADY_EXISTS") {
+        onError: (ctx) => {
+          if (ctx.error.code === "USER_ALREADY_EXISTS") {
             toast.error("E-mail já cadastrado.");
             return form.setError("email", {
               message: "E-mail já cadastrado."
             })
-            toast.error(ctx.error.error)
           }
         },
       },
@@ -152,7 +151,7 @@ export default function SignUpForm() {
               />
             </CardContent>
             <CardFooter>
-              <Button type="submit">Criar conta</Button>
+              <Button type="submit" className="w-full">Criar conta</Button>
             </CardFooter>
           </form>
         </Form>

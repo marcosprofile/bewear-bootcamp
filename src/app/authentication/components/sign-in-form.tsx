@@ -58,14 +58,12 @@ export default function SignInForm() {
             return form.setError("email", {
               message: "Usuário não encontrado."
             })
-            toast.error(ctx.error.error)
           }
           if (ctx.error.code === "INVALID_EMAIL_OR_PASSWORD") {
             toast.error("E-mail ou senha inválidos.");
             return form.setError("email", {
               message: "E-mail ou senha inválidos.",
-            });
-            toast.error(ctx.error.error)
+            })
           }
         },
       },
@@ -114,7 +112,7 @@ export default function SignInForm() {
               />
             </CardContent>
             <CardFooter>
-              <Button type="submit">Entrar</Button>
+              <Button type="submit" className="w-full">Entrar</Button>
             </CardFooter>
           </form>
         </Form>
