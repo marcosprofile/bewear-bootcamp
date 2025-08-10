@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,22 +24,30 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
-const formSchema = z.object({
-  name: z.string().trim().min(1, "Nome é obrigatório."),
-  email: z.email("Email inválido."),
-  password: z.string().min(8, "Senha inválida."),
-  passwordConfirmation: z.string(),
-}).refine((data) => {
-  return data.password === data.passwordConfirmation
-}, {
-  error: "As senhas não coincidem.",
-  path: ["passwordConfirmation"]
-});
+const formSchema = z
+  .object({
+    name: z.string().trim().min(1, "Nome é obrigatório."),
+    email: z.email("Email inválido."),
+    password: z.string().min(8, "Senha inválida."),
+    passwordConfirmation: z.string(),
+  })
+  .refine(
+    (data) => {
+      return data.password === data.passwordConfirmation;
+    },
+    {
+      error: "As senhas não coincidem.",
+      path: ["passwordConfirmation"],
+    },
+  );
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function SignUpForm() {
+  const router = useRouter();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,7 +58,26 @@ export default function SignUpForm() {
     },
   });
 
-  function onSubmit(values: FormValues) {}
+  async function onSubmit(values: FormValues) {
+    await authClient.signUp.email({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/")
+        },
+        onError: (error) => {
+          if (error.error.code === "USER_ALREADY_EXISTS") {
+            toast.error("E-mail já cadastrado.");
+            form.setError("email", {
+              message: "E-mail já cadastrado."
+            })
+          }
+        },
+      },
+    });
+  }
 
   return (
     <>
