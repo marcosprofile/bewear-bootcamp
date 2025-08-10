@@ -6,7 +6,7 @@ import SignUpForm from "./components/sign-up-form";
 
 export default function Authentication() {
   return (
-    <>
+    <div className="h-[calc(100vh-5.5rem)]">
       <Header />
       <div className="m-auto flex w-full max-w-lg flex-col justify-center gap-6 px-4 py-20">
         <Tabs defaultValue="sign-in">
@@ -22,6 +22,6 @@ export default function Authentication() {
           </TabsContent>
         </Tabs>
       </div>
-    </>
+    </div>
   );
 }

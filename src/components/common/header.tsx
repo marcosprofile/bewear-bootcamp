@@ -44,7 +44,7 @@ export default function Header() {
                         <AvatarImage
                           src={session?.user?.image as string | undefined}
                         />
-                        <AvatarFallback>
+                        <AvatarFallback className="bg-violet-500 text-white">
                           {session?.user?.name?.split(" ")?.[0]?.[0]}
                           {session?.user?.name?.split(" ")?.[1]?.[0]}
                         </AvatarFallback>
