@@ -16,7 +16,9 @@ interface ProductVariantPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function ProductVariantPage({ params }: Readonly<ProductVariantPageProps>) {
+export default async function ProductVariantPage({
+  params,
+}: Readonly<ProductVariantPageProps>) {
   const { slug } = await params;
   const productVariant = await db.query.productVariantTable.findFirst({
     where: eq(productVariantTable.slug, slug),

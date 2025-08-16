@@ -9,14 +9,20 @@ interface ProductItemProps {
   product: typeof productTable.$inferSelect & {
     variants: (typeof productVariantTable.$inferSelect)[];
   };
-  textContainerClassName?: string
+  textContainerClassName?: string;
 }
 
-export default function ProductItem({ product, textContainerClassName }: Readonly<ProductItemProps>) {
+export default function ProductItem({
+  product,
+  textContainerClassName,
+}: Readonly<ProductItemProps>) {
   const firstVariant = product.variants[0];
 
   return (
-    <Link href={`/product-variant/${firstVariant.slug}`} className="flex flex-col gap-4">
+    <Link
+      href={`/product-variant/${firstVariant.slug}`}
+      className="flex flex-col gap-4"
+    >
       <Image
         src={firstVariant.imageUrl}
         alt={firstVariant.name}
@@ -26,10 +32,7 @@ export default function ProductItem({ product, textContainerClassName }: Readonl
         className="h-auto w-full rounded-3xl"
       />
       <div
-        className={cn(
-          "flex max-w-50 flex-col gap-1", 
-          textContainerClassName
-        )}
+        className={cn("flex max-w-50 flex-col gap-1", textContainerClassName)}
       >
         <p className="truncate text-sm font-medium">{product.name}</p>
         <p className="text-muted-foreground truncate text-xs font-medium">

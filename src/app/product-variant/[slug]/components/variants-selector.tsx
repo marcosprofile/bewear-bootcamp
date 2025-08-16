@@ -4,11 +4,14 @@ import Link from "next/link";
 import { productVariantTable } from "@/db/schema";
 
 interface VariantSelectorProps {
-  selectedVariantSlug: string,
+  selectedVariantSlug: string;
   variants: (typeof productVariantTable.$inferSelect)[];
 }
 
-export default function VariantSelector({ selectedVariantSlug, variants }: Readonly<VariantSelectorProps>) {
+export default function VariantSelector({
+  selectedVariantSlug,
+  variants,
+}: Readonly<VariantSelectorProps>) {
   return (
     <div className="flex items-center gap-6">
       {variants.map((variant) => (

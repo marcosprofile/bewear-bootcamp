@@ -11,11 +11,14 @@ interface ProductListProps {
   })[];
 }
 
-export default function ProductList({ title, products }: Readonly<ProductListProps>) {
+export default function ProductList({
+  title,
+  products,
+}: Readonly<ProductListProps>) {
   return (
     <div className="space-y-6">
-      <h3 className="font-semibold px-4">{title}</h3>
-      <div className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden px-4">
+      <h3 className="px-4 font-semibold">{title}</h3>
+      <div className="flex w-full gap-4 overflow-x-auto px-4 [&::-webkit-scrollbar]:hidden">
         {products.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}

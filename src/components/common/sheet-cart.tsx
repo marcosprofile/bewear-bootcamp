@@ -24,9 +24,7 @@ export default function SheetCard() {
         <SheetHeader>
           <SheetTitle>Carrinho</SheetTitle>
         </SheetHeader>
-        <div className="px-4">
-          
-        </div>
+        <div className="px-4"></div>
       </SheetContent>
     </Sheet>
   );

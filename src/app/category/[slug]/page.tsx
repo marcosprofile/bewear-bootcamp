@@ -10,7 +10,9 @@ interface CategoryPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function CategoryPage({ params }: Readonly<CategoryPageProps>) {
+export default async function CategoryPage({
+  params,
+}: Readonly<CategoryPageProps>) {
   const { slug } = await params;
   const category = await db.query.categoryTable.findFirst({
     where: eq(categoryTable.slug, slug),
@@ -22,18 +24,22 @@ export default async function CategoryPage({ params }: Readonly<CategoryPageProp
   const products = await db.query.productTable.findMany({
     where: eq(productTable.categoryId, category.id),
     with: {
-      variants: true
-    }
+      variants: true,
+    },
   });
 
   return (
     <div className="h-[calc(100vh-5.5rem)]">
       <Header />
       <div className="space-y-4 py-6">
-        <h2 className="font-semibold px-4 text-xl">{ category.name }</h2>
+        <h2 className="px-4 text-xl font-semibold">{category.name}</h2>
         <div className="grid grid-cols-2 gap-6 p-4">
           {products.map((product) => (
-            <ProductItem key={product.id} product={product} textContainerClassName="max-w-full" />
+            <ProductItem
+              key={product.id}
+              product={product}
+              textContainerClassName="max-w-full"
+            />
           ))}
         </div>
       </div>
