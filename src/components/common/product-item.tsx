@@ -12,7 +12,7 @@ interface ProductItemProps {
   textContainerClassName?: string
 }
 
-export default function ProductItem({ product, textContainerClassName }: ProductItemProps) {
+export default function ProductItem({ product, textContainerClassName }: Readonly<ProductItemProps>) {
   const firstVariant = product.variants[0];
 
   return (

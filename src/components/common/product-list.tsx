@@ -11,7 +11,7 @@ interface ProductListProps {
   })[];
 }
 
-export default function ProductList({ title, products }: ProductListProps) {
+export default function ProductList({ title, products }: Readonly<ProductListProps>) {
   return (
     <div className="space-y-6">
       <h3 className="font-semibold px-4">{title}</h3>
