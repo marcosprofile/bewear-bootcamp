@@ -1,7 +1,10 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { ShoppingBasket } from "lucide-react";
+import Image from "next/image";
 
+import getCart from "@/actions/get-cart";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,6 +15,11 @@ import {
 } from "@/components/ui/sheet";
 
 export default function SheetCard() {
+  const { data: cart, isPending: cartIsLoading } = useQuery({
+    queryKey: ["cart"],
+    queryFn: () => getCart()
+  });
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -24,7 +32,22 @@ export default function SheetCard() {
         <SheetHeader>
           <SheetTitle>Carrinho</SheetTitle>
         </SheetHeader>
-        <div className="px-4"></div>
+        <div className="px-4">
+          {cartIsLoading && <div>Carregando...</div>}
+          {cart?.items.map((item) => (
+            <div key={item.id}>
+              <Image
+                src={item.productVariant.imageUrl}
+                alt={item.productVariant.product.name}
+                width={100}
+                height={100}
+              />
+              <div>
+                <h3 className="font-semibold">{ item.productVariant.product.name }</h3>
+              </div>
+            </div>
+          ))}
+        </div>
       </SheetContent>
     </Sheet>
   );
