@@ -10,7 +10,7 @@ interface CategoryPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage({ params }: Readonly<CategoryPageProps>) {
   const { slug } = await params;
   const category = await db.query.categoryTable.findFirst({
     where: eq(categoryTable.slug, slug),
