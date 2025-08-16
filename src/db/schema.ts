@@ -130,7 +130,7 @@ export const productVariantRelations = relations(
 );
 
 export const shippingAddressTable = pgTable("shipping_address", {
-  id: text("id").primaryKey(),
+  id: uuid().primaryKey().defaultRandom(),
   userId: text("user_id")
     .notNull()
     .references(() => userTable.id, { onDelete: "cascade" }),
@@ -142,7 +142,7 @@ export const shippingAddressTable = pgTable("shipping_address", {
   city: text().notNull(),
   state: text().notNull(),
   neighbordhood: text().notNull(),
-  zipCod: text().notNull(),
+  zipCode: text().notNull(),
   country: text().notNull(),
   phone: text().notNull(),
   email: text().notNull(),
@@ -165,11 +165,11 @@ export const shippingAddressRelations = relations(
 );
 
 export const cartTable = pgTable("cart", {
-  id: text("id").primaryKey(),
+  id: uuid().primaryKey().defaultRandom(),
   userId: text("user_id")
     .notNull()
     .references(() => userTable.id, { onDelete: "cascade" }),
-  shippingAddressId: text("shipping_address_id").references(
+  shippingAddressId: uuid("shipping_address_id").references(
     () => shippingAddressTable.id,
     { onDelete: "set null" },
   ),
@@ -189,8 +189,8 @@ export const cartRelations = relations(cartTable, ({ one, many }) => ({
 }));
 
 export const cartItemTable = pgTable("cart_item", {
-  id: text("id").primaryKey(),
-  cartId: text("cart_id")
+  id: uuid().primaryKey().defaultRandom(),
+  cartId: uuid("cart_id")
     .notNull()
     .references(() => cartTable.id, { onDelete: "cascade" }),
   productVariantId: uuid("product_variant_id")
