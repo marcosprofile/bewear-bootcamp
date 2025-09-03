@@ -21,7 +21,7 @@ export default function CartItem({
   productVariantImageUrl,
   productVariantPriceInCents,
   quantity,
-}: CartItemProps) {
+}: Readonly<CartItemProps>) {
   return (
     <div className="flex items-center justify-between" id={id}>
       <div className="flex items-center gap-4">
@@ -39,7 +39,8 @@ export default function CartItem({
           </span>
           <div className="flex w-[100px] items-center justify-between rounded-lg border p-1">
             <Button className="h-4 w-4" variant="ghost" onClick={() => {}}>
-              <MinusIcon />
+              {quantity < 2 && <TrashIcon />}
+              {quantity > 1 && <MinusIcon />}
             </Button>
             <p>{quantity}</p>
             <Button className="h-4 w-4" variant="ghost" onClick={() => {}}>
@@ -48,10 +49,7 @@ export default function CartItem({
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-end gap-1">
-        <Button variant="outline" size="icon">
-          <TrashIcon />
-        </Button>
+      <div className="flex flex-col items-end justify-center gap-1">
         <p className="text-sm font-bold">
           {formatCentsToBRL(productVariantPriceInCents)}
         </p>
