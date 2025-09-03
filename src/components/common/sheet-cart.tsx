@@ -45,8 +45,8 @@ export default function SheetCard() {
 
         <div className="flex h-full flex-col px-5 pb-5">
           <div className="flex h-full max-h-full flex-col overflow-hidden">
-            <ScrollArea>
-              <div className="flex h-full flex-col gap-8">
+            <ScrollArea className="h-full">
+              <div className="flex h-full flex-col gap-8 pb-6">
                 {cartIsLoading && <div>Carregando...</div>}
                 {cart?.items.map((item) => (
                   <CartItem
